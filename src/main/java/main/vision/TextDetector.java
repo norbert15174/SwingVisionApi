@@ -32,10 +32,6 @@ public class TextDetector {
                 if (res.hasError()) {
                     System.out.format("Error: %s%n", res.getError().getMessage());
                 }
-
-                for(EntityAnnotation s : res.getTextAnnotationsList()){
-                    System.out.println(s.getDescription());
-                }
                 // For full list of available annotations, see http://g.co/cloud/vision/docs
                return res.getTextAnnotationsList().get(0).getDescription();
             }

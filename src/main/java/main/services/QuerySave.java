@@ -2,32 +2,31 @@ package main.services;
 
 import main.GUI.AppGUI;
 import main.entity.UserAccount;
+import main.entity.UserQueries;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import java.io.File;
+
 import static main.GUI.GUI.jf;
 
 
-public class Login {
-
-    public static String account;
-
-    public static boolean loginToApp(String login, String password){
+public class QuerySave {
+    public static boolean querySave(String login, String text, File file){
         Configuration configuration = new Configuration();
         configuration.configure("hibernate.cfg.xml");
-        configuration.addAnnotatedClass(UserAccount.class);
+        configuration.addAnnotatedClass(UserQueries.class);
         SessionFactory factory = configuration.buildSessionFactory();
         Session session = factory.getCurrentSession();
+        UserQueries querySave = new UserQueries();
+        querySave.setLogin(login);
+        querySave.setText(text);
+        querySave.setPhoto(file);
         session.beginTransaction();
-        UserAccount user = session.get(UserAccount.class,1L);
+        session.save(querySave);
         session.getTransaction().commit();
         factory.close();
-        if(user.getLogin().matches(login) && user.getPassword().matches(password)){
-            jf.setVisible(false);
-            account = login;
-            AppGUI.startApp();
-        }
-        return false;
+        return true;
     }
 }
