@@ -8,9 +8,17 @@ public class GUI {
     public static JFrame jf = new JFrame("Text Detector APP");
     public static JTextField login = new JTextField(20);
     public static JTextField password = new JTextField(20);
+    public static JLabel wrong = new JLabel();
+
+    public static void setWrongLook(){
+        wrong.setForeground(Color.RED);
+    }
 
     public static void createAndShowPanel(){
         JPanel jpFirst = new JPanel();
+        setWrongLook();
+        jpFirst.add(wrong);
+
         jpFirst.setBackground(Color.decode("#2e2d2d"));
         jpFirst.setPreferredSize(new Dimension(1800,800));
         JPanel jp = new JPanel(new GridLayout(2,1,0,0));

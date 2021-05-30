@@ -45,6 +45,7 @@ public class AppGUI extends JFrame{
         jPanel.add(button4,Component.BOTTOM_ALIGNMENT);
         button2.addActionListener(new ChooseAction());
         button4.addActionListener(new ChangeViewAction());
+        button3.addActionListener(new SaveAction());
     }
 
     public static void startApp()

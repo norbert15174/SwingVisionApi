@@ -1,19 +1,19 @@
 package main.services;
 
-import main.GUI.AppGUI;
-import main.entity.UserAccount;
 import main.entity.UserQueries;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import javax.sql.rowset.serial.SerialBlob;
 import java.io.File;
-
-import static main.GUI.GUI.jf;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.sql.SQLException;
 
 
 public class QuerySave {
-    public static boolean querySave(String login, String text, File file){
+    public static boolean querySave(String login, String text, File file) throws IOException, SQLException {
         Configuration configuration = new Configuration();
         configuration.configure("hibernate.cfg.xml");
         configuration.addAnnotatedClass(UserQueries.class);
@@ -22,7 +22,8 @@ public class QuerySave {
         UserQueries querySave = new UserQueries();
         querySave.setLogin(login);
         querySave.setText(text);
-        querySave.setPhoto(file);
+        querySave.setPhoto(new SerialBlob(Files.readAllBytes(file.toPath())));
+        querySave.setFileName(file.getName());
         session.beginTransaction();
         session.save(querySave);
         session.getTransaction().commit();

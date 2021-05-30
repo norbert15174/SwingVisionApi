@@ -15,7 +15,8 @@ import java.nio.file.Files;
 
 public class ChooseAction implements ActionListener {
 
-    private String currentPath;
+    public static String currentPath;
+    public static String text;
 
     public ChooseAction() {
     }
@@ -34,7 +35,9 @@ public class ChooseAction implements ActionListener {
                         .getImage()
                         .getScaledInstance(700, 1000, Image.SCALE_DEFAULT));
                 AppGUI.filePath.setIcon(imageIcon);
-                AppGUI.textPanel.setText("<html><p style='padding: 50px 20px 50px 20px; width: 700px; background-color: #212623; font-size:15px; color:white;' >" + TextDetector.detectText(window.getSelectedFile().getAbsolutePath()) + "</p><html>");
+                text = TextDetector.detectText(window.getSelectedFile().getAbsolutePath());
+                AppGUI.textPanel.setText("<html><p style='padding: 50px 20px 50px 20px; width: 700px; background-color: #212623; font-size:15px; color:white;' >" + text + "</p><html>");
+
             } catch ( IOException e ) {
                 e.printStackTrace();
             }

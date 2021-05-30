@@ -1,12 +1,19 @@
 package main.services;
 
 import main.GUI.AppGUI;
+import main.GUI.GUI;
 import main.entity.UserAccount;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 
-import static main.GUI.GUI.jf;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.List;
+
+
 
 
 public class Login {
@@ -20,14 +27,28 @@ public class Login {
         SessionFactory factory = configuration.buildSessionFactory();
         Session session = factory.getCurrentSession();
         session.beginTransaction();
-        UserAccount user = session.get(UserAccount.class,1L);
+        String query = "FROM UserAccount WHERE login='" + login +"'";
+        Query queryToSave = session.createQuery(query);
+        List <UserAccount> user = queryToSave.getResultList();
         session.getTransaction().commit();
         factory.close();
-        if(user.getLogin().matches(login) && user.getPassword().matches(password)){
-            jf.setVisible(false);
+        if(user.isEmpty()){
+            Register.registerToApp(login,password);
+            GUI.jf.setVisible(false);
             account = login;
             AppGUI.startApp();
+            return true;
         }
-        return false;
+        if(user.get(0).getLogin().matches(login) && user.get(0).getPassword().matches(password)){
+            GUI.jf.setVisible(false);
+            account = login;
+            AppGUI.startApp();
+            return true;
+        }else{
+            GUI.wrong.setText("WRONG PASSWORD");
+            GUI.jf.validate();
+            return false;
+        }
+
     }
 }

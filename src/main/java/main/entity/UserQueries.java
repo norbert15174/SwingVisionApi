@@ -1,8 +1,7 @@
 package main.entity;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
-import java.io.File;
+import java.sql.Blob;
 
 @Entity
 public class UserQueries {
@@ -10,18 +9,21 @@ public class UserQueries {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String login;
-    private File photo;
+    @Lob
+    @Column(columnDefinition="LONGBLOB")
+    private Blob photo;
     @Column(columnDefinition = "varchar(5000)")
     private String text;
-
-    public UserQueries(long id , String login , File photo , String text) {
-        this.id = id;
-        this.login = login;
-        this.photo = photo;
-        this.text = text;
-    }
+    private String fileName;
 
     public UserQueries() {
+    }
+
+    public UserQueries(long id , String login , String text , String fileName) {
+        this.id = id;
+        this.login = login;
+        this.text = text;
+        this.fileName = fileName;
     }
 
     public long getId() {
@@ -42,11 +44,11 @@ public class UserQueries {
         return this;
     }
 
-    public File getPhoto() {
+    public Blob getPhoto() {
         return photo;
     }
 
-    public UserQueries setPhoto(File photo) {
+    public UserQueries setPhoto(Blob photo) {
         this.photo = photo;
         return this;
     }
@@ -57,6 +59,15 @@ public class UserQueries {
 
     public UserQueries setText(String text) {
         this.text = text;
+        return this;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public UserQueries setFileName(String fileName) {
+        this.fileName = fileName;
         return this;
     }
 }
