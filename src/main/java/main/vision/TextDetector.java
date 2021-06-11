@@ -10,7 +10,7 @@ import java.util.List;
 
 public class TextDetector {
     // Detects text in the specified image.
-    public static String detectText(String filePath) throws IOException {
+    public static String detectText(String filePath) throws Exception {
         List <AnnotateImageRequest> requests = new ArrayList <>();
 
         ByteString imgBytes = ByteString.readFrom(new FileInputStream(filePath));
@@ -30,7 +30,7 @@ public class TextDetector {
 
             for (AnnotateImageResponse res : responses) {
                 if (res.hasError()) {
-                    System.out.format("Error: %s%n", res.getError().getMessage());
+                    throw new Exception();
                 }
                 // For full list of available annotations, see http://g.co/cloud/vision/docs
                return res.getTextAnnotationsList().get(0).getDescription();

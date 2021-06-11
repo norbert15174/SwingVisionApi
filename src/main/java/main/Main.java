@@ -1,31 +1,32 @@
 package main;
 
 
-import main.GUI.AppGUI;
-import main.GUI.ChangeViewAction;
-import main.GUI.GUI;
-import main.entity.UserAccount;
-import main.services.Login;
-import main.services.QuerySave;
-import main.services.Register;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.LinkedHashSet;
+
+import main.GUI.GUI;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.config.Configurator;
+import org.apache.logging.log4j.core.config.DefaultConfiguration;
 
 
 public class Main {
+
+    private static Logger logger = LogManager.getLogger(Main.class);
+
     public static void main(String[] args) throws IOException, SQLException {
         //TextDetector.detectText("t3qWG.png");
         GUI.createAndShowPanel();
+        logger.info("The application has been properly started");
+        // log4j2 setup
+//        Configurator.initialize(new DefaultConfiguration());
+//        Configurator.setRootLevel(Level.INFO);
+//        logger.trace("Entering application.");
+//        logger.trace("Exiting application.");
 //        ChangeViewAction.asd();
 //        //AppGUI.startApp();
 //       Register.registerToApp("axe89","najlepszy");

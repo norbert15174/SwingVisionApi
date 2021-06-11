@@ -17,8 +17,12 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class ChangeViewAction implements ActionListener {
+
+    public static boolean isUsed = false;
+
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
+        if(!isUsed) isUsed = true;
         AppGUI.frame.getContentPane().remove(1);
         try {
             AppGUI.frame.getContentPane().add(getUserStoredAction());
@@ -31,11 +35,11 @@ public class ChangeViewAction implements ActionListener {
     public JScrollPane getUserStoredAction() throws SQLException {
         JPanel posts = new JPanel();
         List<UserQueries> queries = findAllUserActions();
-        posts.setPreferredSize(new Dimension(1800,queries.size()*1000));
+        posts.setPreferredSize(new Dimension(1800,queries.size()*1450));
         for(UserQueries query : queries){
 
             JPanel panel = new JPanel();
-            panel.setPreferredSize(new Dimension(1800,1000));
+            panel.setPreferredSize(new Dimension(1800,1350));
             JLabel filePath = new JLabel();
             JTextPane header = new JTextPane();
             header.setPreferredSize(new Dimension(1800,100));
@@ -52,7 +56,7 @@ public class ChangeViewAction implements ActionListener {
             ImageIcon imageIcon = null;
             imageIcon = new ImageIcon(new ImageIcon(query.getPhoto().getBytes(1, (int) query.getPhoto().length()))
                     .getImage()
-                    .getScaledInstance(700, 1000, Image.SCALE_DEFAULT));
+                    .getScaledInstance(600, 1200, Image.SCALE_DEFAULT));
             filePath.setIcon(imageIcon);
             panel.add(textPanel);
             panel.add(filePath);
